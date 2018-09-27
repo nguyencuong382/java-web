@@ -1,0 +1,3 @@
+<footer class="footer">
+    &copy; copyright by...
+</footer>
