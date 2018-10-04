@@ -5,65 +5,83 @@
  */
 package controller;
 
-import entity.TrainStop;
+import entity.Student;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.TrainStopDAO;
+import model.StudentDAO;
 
 /**
  *
  * @author Admin
  */
-public class TrainController extends HttpServlet {
+public class AddStudentController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.service(req, resp); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void destroy() {
+        super.destroy(); //To change body of generated methods, choose Tools | Templates.
+    }
+    public boolean valid(String text) {
+        if (text == null || text.equals("")) {
+            return false;
+        }
+
+        return true;
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
-
+        String studentName = request.getParameter("studentName");
+        String classId = request.getParameter("classId");
+        String gender = request.getParameter("gender");
+        String DOB = request.getParameter("DOB");
         try {
-            TrainStopDAO trainStopDAO = new TrainStopDAO();
+            if (valid(studentName) || valid(classId) || valid(DOB)) {
+                String studentName_ = studentName;
+                int classId_ = Integer.parseInt(classId);
+                boolean gender_ = gender != null;
+                Date DOB_ = null;
+                try {
+                    DOB_ = new SimpleDateFormat("dd/MM/yyyy").parse(DOB);
+                } catch (ParseException ex) {
+                    System.out.println(ex); 
+                }
 
-            String stationId = request.getParameter("stationId");
-            String trainCode = request.getParameter("trainCode");
-            System.out.println(trainCode);
-            List<TrainStop> trainStops;
-
-            if (stationId != null) {
-                trainStops = trainStopDAO.list(Integer.parseInt(stationId));
-            } else if (trainCode != null) {
-                trainStops = trainStopDAO.list(trainCode);
+                Student newStudent = new Student(-1, studentName_, classId_, gender_, DOB_);
+                new StudentDAO().save(newStudent);
+                response.sendRedirect("/FinalQ1_SE05630/group");
             } else {
-                trainStops = trainStopDAO.list();
-
+                RequestDispatcher rd = request.getRequestDispatcher("/ws1/AddNewStudent.jsp");
+                rd.forward(request, response);
             }
-                    
-            request.setAttribute("trainStops", trainStops);
-            RequestDispatcher rd = request.getRequestDispatcher("/trainstop_traincode.jsp");
-            rd.forward(request, response);
 
         } catch (Exception ex) {
-            Logger.getLogger(TrainController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
+            RequestDispatcher rd = request.getRequestDispatcher("/ws1/AddNewStudent.jsp");
+            rd.forward(request, response);
         }
-
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

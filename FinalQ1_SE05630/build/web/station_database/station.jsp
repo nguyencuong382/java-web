@@ -27,11 +27,8 @@
                 <th>Train Code</th>
             </tr>
             
-           
-            
             <c:forEach var="station" items = "${stations}">
                 <tr>
-                    
                     <td>
                         <c:url value="/train/list" var="train">
                             <c:param name="stationId" value="${station.id}" />

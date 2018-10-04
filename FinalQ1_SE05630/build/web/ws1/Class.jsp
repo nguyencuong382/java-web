@@ -53,7 +53,10 @@
                             </td>
                             
                             <td>
-                                <a href="${students}">Add more student</a>
+                                <c:url value="group/student/add" var="addStudent">
+                                    <c:param name="groupId" value="${group.id}" />
+                                </c:url>
+                                <a href="${addStudent}">Add more student</a>
                             </td>
                         </tr>
                     </c:forEach>
