@@ -50,13 +50,21 @@ public class FHandler extends AbstractHandler {
     public void btnFindAction() {
         String find = txtFind.getText();
         this.txtArea.requestFocusInWindow();
-        
+
         // if the searching word change
         // we reset pos at current postion of caret
-        if (previous_serch.equals(find)) {
+        if (!previous_serch.equals(find)) {
             previous_serch = find;
-            pos = txtArea.getCaretPosition();
-            lastPos = pos;
+            if (previous_serch.equalsIgnoreCase(find)) {
+                if (this.btnMathCase.isSelected()) {
+                    pos = txtArea.getCaretPosition();
+                    lastPos = pos;
+                }
+            } else {
+                pos = txtArea.getCaretPosition();
+                lastPos = pos;
+            }
+
         }
 
         try {
@@ -70,7 +78,7 @@ public class FHandler extends AbstractHandler {
             System.out.println(e);
         }
     }
-    
+
     // when user want to swith down to up serach
     // the postion is at the right of last found word
     // so the next word is the last found word itself

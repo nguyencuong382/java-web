@@ -142,6 +142,7 @@ public abstract class AbstractHandler {
             // go to end postion of found tet to find next text
             pos += findLength;
         } else {
+            pos = lastPos + findLength;
             JOptionPane.showMessageDialog((JDialog) view, "Can't find " + findText);
         }
         
@@ -177,6 +178,7 @@ public abstract class AbstractHandler {
             this.setCaret(pos - findLength, findLength);
             pos -= findLength;
         } else {
+            pos = lastPos - findLength;
             JOptionPane.showMessageDialog((JDialog) view, "Can't find " + findText);
         }
         found = found_;

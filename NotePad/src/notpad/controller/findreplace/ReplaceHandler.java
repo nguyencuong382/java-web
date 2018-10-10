@@ -105,7 +105,7 @@ public class ReplaceHandler extends AbstractHandler {
             // if some word(s) will be ingoreed when continue searching
             // we reset pos to the last found word
             else {
-                pos = lastPos;
+                pos = lastPos + findLength;
             }
         } catch (BadLocationException ex) {
         }
