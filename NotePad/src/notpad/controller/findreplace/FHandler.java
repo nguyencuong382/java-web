@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.text.BadLocationException;
+import notepad.controller.Handler;
 import notepad.view.FindDialog;
 
 /**
@@ -77,6 +78,8 @@ public class FHandler extends AbstractHandler {
         } catch (BadLocationException e) {
             System.out.println(e);
         }
+        
+        Handler.setStateMemory();
     }
 
     // when user want to swith down to up serach

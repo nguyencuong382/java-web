@@ -130,7 +130,7 @@ public class ReplaceHandler extends AbstractHandler {
             // at the begining, not word is found
             if (!found) {
                 btnFindAction();
-                return;
+                //return;
             }
 
             Document doc = this.txtArea.getDocument();

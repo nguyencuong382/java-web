@@ -96,11 +96,8 @@ public abstract class Handler implements ActionListener {
         txtArea.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                 try {
-                    String textSelected  = txtArea.getSelectedText();
-                    boolean enable = textSelected != null;
-                    notePad.getBtnCut().setEnabled(enable);
-                    notePad.getBtnCopy().setEnabled(enable);
+                try {
+                    setStateMemory();
                 } catch (Exception ex) {
                 }
             }
@@ -161,5 +158,12 @@ public abstract class Handler implements ActionListener {
         notePad.getBtnFind().setEnabled(!Util.isNothing());
         notePad.getBtnReplace().setEnabled(!Util.isNothing());
 
+    }
+
+    public static void setStateMemory() {
+        String textSelected = txtArea.getSelectedText();
+        boolean enable = textSelected != null;
+        notePad.getBtnCut().setEnabled(enable);
+        notePad.getBtnCopy().setEnabled(enable);
     }
 }

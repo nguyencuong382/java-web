@@ -7,12 +7,9 @@ package controller;
 
 import entity.Student;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,20 +23,6 @@ import model.StudentDAO;
  */
 public class AddStudentController extends HttpServlet {
 
-    @Override
-    public void init() throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
-    public void destroy() {
-        super.destroy(); //To change body of generated methods, choose Tools | Templates.
-    }
     public boolean valid(String text) {
         if (text == null || text.equals("")) {
             return false;

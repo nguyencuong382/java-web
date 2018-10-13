@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
+import static notepad.controller.Handler.notePad;
+import static notepad.controller.Handler.txtArea;
 
 /**
  *
@@ -43,12 +45,15 @@ public abstract class AbstractHandler {
         this.txtFind = view.getTxtFind();
         this.btnMathCase = view.getBtnMatchCase();
         this.btnFind = view.getBtnFind();
+
+        pos = txtArea.getCaretPosition();
+        lastPos = pos;
     }
 
     public void init() {
         if (adapter == null) {
             adapter = new MouseAdapter() {
-                
+
                 // user may do some event when finding or replacing
                 // this effects the position of caret to finding
                 @Override
@@ -77,7 +82,7 @@ public abstract class AbstractHandler {
 
         });
     }
-    
+
     /**
      * Disable find button when nothing in the searching text field
      */
@@ -89,12 +94,12 @@ public abstract class AbstractHandler {
         }
     }
 
-   
     /**
      * check if two words is equal and satisfies condition like matching case
+     *
      * @param str_1
      * @param str_2
-     * @return 
+     * @return
      */
     public boolean match(String str_1, String str_2) {
         if (this.btnMathCase.isSelected()) {
@@ -108,25 +113,26 @@ public abstract class AbstractHandler {
         }
         return false;
     }
-    
+
     /**
      * Find word downing direction
+     *
      * @param findText
      * @return
-     * @throws BadLocationException 
+     * @throws BadLocationException
      */
     public boolean findDown(String findText) throws BadLocationException {
         Document document = txtArea.getDocument();
         findLength = findText.length();
         boolean found_ = false;
-        
+
         // loop every string in the text which has length equal serching text length 
         // and loop from left to right
         // For example: "123abc", serching text length is 2, the loop will browse 12 then 3a then bc
         while (pos + findLength <= document.getLength()) {
             // get match text each loop
             String matchText = document.getText(pos, findLength);
-            
+
             // check if match text is equal searching text
             if (match(matchText, findText)) {
                 found_ = true;
@@ -138,29 +144,30 @@ public abstract class AbstractHandler {
         if (found_) {
             // display found text with background
             this.setCaret(pos, findLength);
-            
+
             // go to end postion of found tet to find next text
             pos += findLength;
         } else {
             pos = lastPos + findLength;
             JOptionPane.showMessageDialog((JDialog) view, "Can't find " + findText);
         }
-        
+
         found = found_;
         return found;
     }
-    
+
     /**
      * Find word up direction
+     *
      * @param findText
      * @return
-     * @throws BadLocationException 
+     * @throws BadLocationException
      */
     public boolean findUp(String findText) throws BadLocationException {
         Document document = txtArea.getDocument();
         findLength = findText.length();
         boolean found_ = false;
-        
+
         // loop every string in the text which has length equal serching text length 
         // and loop from right to left
         // For example: "123abc", serching text length is 2, the loop will browse bc then 3a then 12
@@ -184,18 +191,21 @@ public abstract class AbstractHandler {
         found = found_;
         return found_;
     }
-    
+
     /**
      * Display caret (the word will be filled with background color)
+     *
      * @param pos
      * @param length
-     * @throws BadLocationException 
+     * @throws BadLocationException
      */
     public void setCaret(int pos, int length) throws BadLocationException {
         Rectangle viewRect = txtArea.modelToView(pos);
         txtArea.scrollRectToVisible(viewRect);
         txtArea.setCaretPosition(pos + length);
         txtArea.moveCaretPosition(pos);
+
+       
     }
 
     public void removeCaret() {
