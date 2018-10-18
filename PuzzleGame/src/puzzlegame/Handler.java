@@ -80,6 +80,20 @@ public class Handler {
         }
     }
 
+    public int ask(String sentence) {
+        Object[] options = {"Yes",
+            "No"};
+        int n = JOptionPane.showOptionDialog(view,
+                sentence,
+                "A Silly Question",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //do not use a custom Icon
+                options, //the titles of buttons
+                options[0]); //default button title
+        return n;
+    }
+
     public void addListener() {
         listSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,35 +108,29 @@ public class Handler {
         view.getBtnNewGame().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!playing) {
-                    gen();
-                    countTimeThread.start_();
-                    playing = true;
-                } else {
-                    countTimeThread.pause();
-                    Object[] options = {"Yes",
-                        "No"};
-                    int n = JOptionPane.showOptionDialog(view,
-                            "Do you want continue game?",
-                            "A Silly Question",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null, //do not use a custom Icon
-                            options, //the titles of buttons
-                            options[0]); //default button title
-
-                    if (n == 0) {
-                        countTimeThread.start_();
-                    } else {
-                        countTimeThread.stop_();
-                        gen();
-                        countTimeThread.start_();
-                        count = 0;
-                        txtMoveCount.setText(count + "");
-                    }
-                }
+                btnNewGame();
             }
         });
+    }
+
+    public void btnNewGame() {
+        if (!playing) {
+            gen();
+            countTimeThread.start_();
+            playing = true;
+        } else {
+            countTimeThread.pause();
+            int n = ask("Do you want continue game?");
+            if (n == 0) {
+                countTimeThread.start_();
+            } else {
+                countTimeThread.stop_();
+                gen();
+                countTimeThread.start_();
+                count = 0;
+                txtMoveCount.setText(count + "");
+            }
+        }
     }
 
     boolean playing = false;
@@ -133,11 +141,14 @@ public class Handler {
             arr_.add(i + 1);
         }
         arr_.add(-1);
-        Collections.shuffle(arr_);
         
-        if(checkWin()){
+       
+        Collections.shuffle(arr_);
+
+        if (!solvable()) {
+            System.out.println("gen again");
             gen();
-            return ;
+            return;
         }
 
         pnBtn.removeAll();
@@ -182,14 +193,7 @@ public class Handler {
             countTimeThread.pause();
             Object[] options = {"Yes",
                 "Exit Game"};
-            int n = JOptionPane.showOptionDialog(view,
-                    "You won! Do you want to start a new game?",
-                    "A Silly Question",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null, //do not use a custom Icon
-                    options, //the titles of buttons
-                    options[0]); //default button title
+            int n = ask("You won! Do you want to start a new game?");
 
             if (n == 0) {
                 countTimeThread.stop_();
@@ -252,6 +256,67 @@ public class Handler {
         }
 
         return -1;
+    }
+    
+    public int getInversion() {
+        int count = 0;
+        for (int i = 0; i < arr_.size(); i++) {
+            int value_i = arr_.get(i);
+            if (value_i == -1) {
+                continue;
+            }
+
+            for (int j = i + 1; j < arr_.size(); j++) {
+                int value_j = arr_.get(j);
+                if (value_j == -1) {
+                    continue;
+                }
+
+                if (value_i > value_j) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public int getEmptyPostion() {
+        for (int i = 0; i < size * size; i++) {
+            if (arr_.get(i) == -1) {
+                return size - (i / size);
+            }
+        }
+
+        return -1;
+    }
+
+    public boolean solvable() {
+
+        int inversion = getInversion();
+        
+        // the array is asending array
+        if(inversion == 0) {
+            return false;
+        }
+        
+        if (size % 2 == 1) {
+            if (inversion % 2 == 0) {
+                return true;
+            }
+        } else {
+            int pos = getEmptyPostion();
+
+            if (pos % 2 == 0 && inversion % 2 == 1) {
+                return true;
+            }
+
+            if (pos % 2 == 1 && inversion % 2 == 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void show() {

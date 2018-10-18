@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tag;
+package tag.simple_tag_support;
 
 import javax.servlet.jsp.JspContext;
 import javax.servlet.jsp.JspWriter;

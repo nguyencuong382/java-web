@@ -3,25 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tag;
+package tag.simple_tag_support;
 
-import java.io.File;
-import javax.servlet.jsp.JspContext;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import util.ListFilesUtil;
-import javax.servlet.http.Cookie;
 
 /**
  *
  * @author Admin
  */
-public class Explorer extends SimpleTagSupport {
+public class Today extends SimpleTagSupport {
 
-    private String path;
+    private String pattern;
 
     /**
      * Called by the container to invoke this tag. The implementation of this
@@ -41,26 +38,25 @@ public class Explorer extends SimpleTagSupport {
 
             JspFragment f = getJspBody();
 
-            if (path == null || path.equals("")) {
-                return;
-            }
+            Date today = new Date();
 
-            ListFilesUtil listFilesUtil = new ListFilesUtil();
-            final String directoryLinuxMac = "/Users/loiane/test";
-            //Windows directory example
-            final String directoryWindows = "C://";
-            File[] files = listFilesUtil.listFilesAndFolders(directoryWindows);
+            SimpleDateFormat sdf = null;
+
+            String result = "";
+
+            try {
+                sdf = new SimpleDateFormat(pattern);
+                result = sdf.format(today);
+            } catch (Exception e) {
+                sdf = new SimpleDateFormat("dd/MM/yyyy");
+                result = sdf.format(today);
+            }
             
-            JspContext ct = getJspContext();
+            out.println(result);
             
-            for (File file : files) {
-                
-                ct.setAttribute("path", file.getAbsolutePath());
-                ct.setAttribute("size", file.length());
-               
-                if (f != null) {
-                    f.invoke(out);
-                }
+
+            if (f != null) {
+                f.invoke(out);
             }
 
             // TODO: insert code to write html after writing the body content.
@@ -68,12 +64,12 @@ public class Explorer extends SimpleTagSupport {
             //
             // out.println("    </blockquote>");
         } catch (java.io.IOException ex) {
-            throw new JspException("Error in Explorer tag", ex);
+            throw new JspException("Error in Today tag", ex);
         }
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
     }
 
 }

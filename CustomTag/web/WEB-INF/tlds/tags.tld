@@ -22,7 +22,7 @@
     -->
   <tag>
     <name>Today</name>
-    <tag-class>tag.Today</tag-class>
+    <tag-class>tag.simple_tag_support.Today</tag-class>
     <body-content>scriptless</body-content>
     <attribute>
       <name>pattern</name>
@@ -33,7 +33,7 @@
   </tag>
   <tag>
     <name>Unicode</name>
-    <tag-class>tag.Unicode</tag-class>
+    <tag-class>tag.simple_tag_support.Unicode</tag-class>
     <body-content>scriptless</body-content>
     <attribute>
       <name>start</name>
@@ -50,13 +50,30 @@
   </tag>
   <tag>
     <name>Explorer</name>
-    <tag-class>tag.Explorer</tag-class>
+    <tag-class>tag.simple_tag_support.Explorer</tag-class>
     <body-content>scriptless</body-content>
     <attribute>
       <name>path</name>
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
+    </attribute>
+  </tag>
+  <tag>
+    <name>Show</name>
+    <tag-class>tag.body_tag_support.Show</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>upper</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+    <attribute>
+      <name>repeat</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>int</type>
     </attribute>
   </tag>
 </taglib>

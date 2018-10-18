@@ -13,6 +13,11 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%! String s = "the fox"; %>
+        
+        <mt:Show upper="true" repeat="3">
+            <%=s%>
+        </mt:Show>
         <form>
             <input type="text" name="path" value="${param.path}">
             <input type="submit" value="Browse">
