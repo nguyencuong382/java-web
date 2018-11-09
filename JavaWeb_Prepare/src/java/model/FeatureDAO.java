@@ -20,23 +20,23 @@ import java.util.List;
 public class FeatureDAO {
 
     public List<Feature> list(int roleId) throws Exception {
-        List<Feature> features;
+        List<Feature> roles;
         try (Connection conn = new DBContext().getConnection()) {
-            features = new ArrayList<>();
+            roles = new ArrayList<>();
             String query = "select R.* from Feature_User RU\n"
                     + "inner join Features R on R.roleid = RU.roleid\n"
                     + "where RU.username = ?";
 
             PreparedStatement ps = conn
                     .prepareStatement(query);
+//            ps.setInt(1, roleId);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                Feature f = new Feature();
-                features.add(f);
+                
             }
         }
 
-        return features;
+        return roles;
     }
 }

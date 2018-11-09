@@ -6,7 +6,7 @@
 package model;
 
 import context.DBContext;
-import entity.Feature;
+import entity.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,26 +17,30 @@ import java.util.List;
  *
  * @author Admin
  */
-public class FeatureDAO {
+public class RoleDAO {
 
-    public List<Feature> list(int roleId) throws Exception {
-        List<Feature> features;
+    public List<Role> list(String userName) throws Exception {
+        List<Role> roles;
         try (Connection conn = new DBContext().getConnection()) {
-            features = new ArrayList<>();
-            String query = "select R.* from Feature_User RU\n"
-                    + "inner join Features R on R.roleid = RU.roleid\n"
-                    + "where RU.username = ?";
+            roles = new ArrayList<>();
+            String query = "select * from Users U\n"
+                    + "inner join Role_User RU on RU.username = U.username\n"
+                    + "inner join Roles RO on RO.roleid = RU.roleid\n"
+                    + "where U.username = ?";
 
             PreparedStatement ps = conn
                     .prepareStatement(query);
+            ps.setString(1, userName);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                Feature f = new Feature();
-                features.add(f);
+                int id = resultSet.getInt("roleid");
+                String roleName = resultSet.getString("rolename");
+                roles.add(new Role(id, roleName));
             }
         }
 
-        return features;
+        return roles;
     }
+
 }

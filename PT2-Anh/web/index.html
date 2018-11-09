@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    </head>
+    <style>
+        div[class^="col"] > div {
+            background-color: #c9e0b4;
+            padding: 5px;
+            height: 100%;
+        }
+
+        .marg {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+        }
+
+        .checkbox > label {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .checkbox input {
+            margin-right: 5px;
+        }
+
+        h6, p {
+            margin-bottom: 0px;
+        }
+
+    </style>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                        <h6>PAYMENT</h6>
+                    </div>
+                </div>
+                <div class="col-6 marg">
+                    <div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value=""><h6>CASH</h6></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div>
+                                    <h6>CURRENCY</h6>
+                                    <div style="display: inline-flex">
+                                        <div style="margin-right: 10px">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value=""><p>Euro</p></label>
+                                            </div>
+
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value=""><p>OTHER</p></label>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value=""><p>Euro</p></label>
+                                            </div>
+
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value=""><p>OTHER</p></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" value=""><h6>CARD</h6></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ITEM CODE</th>
+                        <th>PAGE</th>
+                        <th>QUANTITY</th>
+                        <th>PRICE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select name="itemCode" onchange="changeItem()">
+                                
+                            </select>
+                        </td>
+                        <td><input type="text" class="form-control" name="page"></td>
+                        <td><input type="text" class="form-control" name="quantity" id="price"></td>
+                        <td></td>
+                    </tr>      
+
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            function changeItem() {
+                console.log("aaa")
+            }
+        </script>
+    </body>
+</html>
